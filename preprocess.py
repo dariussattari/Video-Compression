@@ -1,35 +1,44 @@
-#writes full genome to a text file
-skip_genome = False
-chromosome_22_write = False
+#write full reference genome into individual chromosome files.
+import re
 
-chromosome_22 = open('ch22.txt', 'w')
-full_genome = open('human_ref_genome_without_ch22.txt', 'w')
+skip_sequence = True
+pattern = r"NC_0000(?:0[1-9]|1[0-9]|2[0-4])"
+
+ch = 0
 
 with open('GCF_000001405.26_GRCh38_genomic.txt', 'r') as f:
     for line in f:
         if '>' in line:
-            chromosome_22_write = False #chromosome 22 switch
-            if 'alt' in line or 'unlo' in line or 'unplace' in line:
-                skip_genome = True
+            try:
+                s.close()
+            except (NameError, AttributeError):
+                pass
+
+            if not re.search(pattern, line):
+                skip_sequence = True
             else:
-                if 'NC_000022.11' in line:
-                    chromosome_22_write = True #toggle to write to ch22.txt
-                skip_genome = False
+                skip_sequence = False
+                ch += 1
+                s = open(f'ch{ch}.txt', 'w')
+
+                print(f'Writing to ch{ch}.txt')
+
             continue
         
-        if skip_genome:
+        if skip_sequence:
             continue
 
-        if 'N' in line:
-            continue
+        line = line.replace('N', '')
 
-        if chromosome_22_write:
-            chromosome_22.write(line.upper())
-        else:
-            full_genome.write(line.upper())
+        if line:
+            s.write(line.strip().upper())
+
+#safely close the file
+try:
+    s.close()
+except (NameError, AttributeError):
+    pass
 
 
-full_genome.close()
-chromosome_22.close()
 
 print("Program ran successfully")
