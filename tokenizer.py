@@ -14,7 +14,7 @@ iupac_codes = {
 
 
 
-def encode_6mer(chromosome, sequence):
+def encode_6mer(sequence):
     base_to_int = {'A':0, 'T':1, 'G':2, 'C':3}
     int_arr = []
 
