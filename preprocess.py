@@ -19,9 +19,9 @@ with open('GCF_000001405.26_GRCh38_genomic.txt', 'r') as f:
             else:
                 skip_sequence = False
                 ch += 1
-                s = open(f'ch{ch}.txt', 'w')
+                s = open(f'chr{ch}.txt', 'w')
 
-                print(f'Writing to ch{ch}.txt')
+                print(f'Writing to chr{ch}.txt')
 
             continue
         
