@@ -1,6 +1,10 @@
 import random
 import numpy as np
 
+#REPRODUCIBILITY
+random.seed(42)
+
+
 #IUPAC AMBIGUITY CODES
 iupac_codes = {
     'M': ['A','C'],
