@@ -77,8 +77,8 @@ class GenomeDataset(Dataset):
 def create_dataloaders(path, seq_len=512, stride=512, batch_size=32):
     chromosomes_tokens = load_tokens(path)
 
-    train_chromosomes = [c for c in chromosomes_tokens if c != "chr22"]
-    val_chromosomes = ["chr22"]
+    train_chromosomes = [c for c in chromosomes_tokens if c not in ("chr21", "chr22")]
+    val_chromosomes = ["chr21"]
 
     train_dataset = GenomeDataset(
         chromosomes_tokens,
